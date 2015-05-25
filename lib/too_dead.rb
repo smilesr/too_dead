@@ -22,10 +22,10 @@ module TooDead
     end
     
     def execute_menu
-      binding.pry
+ 
       ask_for_username
       puts ""
- #     ask_to_add_or_change_account
+      ask_to_add_or_change_account
       add_todolist
       add_todoitem
     end
@@ -33,38 +33,46 @@ module TooDead
     def ask_for_username
       puts "what is your username (in other words, your first name):"
       result = gets.chomp
-      puts "result is #{result}"
       @first_name = User.find_or_create_by(name: result)
+#       @user = User.add_username(result)
+#       @user.add_username(result)
     end
 
-    # def ask_to_add_or_change_account
-    #   puts "would you like to (1) create or edit a to-do list or (2) edit or delete your name:"
-    #   choice = gets.chomp.to_i
-    #   while choice !=~ '^/[12]$/'
-    #     puts "You must enter (1) if you want to create or edit a to-do list or (2) delete or change your account name"
-    #     choice = gets.chomp
-    #   end
-    #   if choice == 2
-    #     edit_delete_username
-    #   end
-    # end
+    def ask_to_add_or_change_account
+      puts "would you like to (1) create or edit a to-do list or (2) edit or delete your name:"
+      choice = gets.chomp
+      until choice =~ /^[12]$/
+ #     until choice == 2
+        puts "You must enter (1) if you want to create or edit a to-do list or (2) delete or change your account name"
+        choice = gets.chomp
+      end
+      if choice.to_i == 2
+        #@first_name.delete_username
+        edit_delete_username
+      end
+    end
 
-    # def edit_delete_username
-    #   puts "Do you want to (1) delete your account, or (2) edit your account name:"
-    #   account_choice = gets.chomp.to_i
-    #   while account_choice !=~ '^/[12]$/'
-    #     puts "You must enter (1) if you want to create or edit a to-do list or (2) delete or change your account name"
-    #     account_choice = gets.chomp
-    #   end
-    #   if account_choice == 1
-    #     User.user.destroy(name: name)
-    #   elsif account_choice == 2
-    #     User.user.edit_username(name: name)
-    #   end
-    # end
+    def edit_delete_username
+      puts "Do you want to (1) delete your account, or (2) edit your account name:"
+      account_choice = gets.chomp
+#      until account_choice == 1 || account_choice == 2
+      until account_choice =~ /^[12]$/
+        puts "You must enter (1) if you want to create or edit a to-do list or (2) delete or change your account name"
+        account_choice = gets.chomp
+      end
+      if account_choice.to_i == 1
+        @first_name.destroy #(name: name)
+      elsif account_choice.to_i == 2
+        puts "What would you like your new account name to be:"
+        new_name = gets.chomp
+        # User.edit_username(name: new_name)
+        # User.update(name: new_name)
+        @first_name.update(name: new_name)
+      end
+    end
 
     def add_todolist
-      puts "What is the category of the to-do items (in other words, what is the name of the to-do list):"
+      puts "What is the name of the to-do list that you would like to create, edit or delete:"
       result = gets.chomp
       @todolist = TodoList.find_or_create_by(category: result)
       @carry_the_category_name = result
@@ -80,6 +88,6 @@ module TooDead
       @todo_item.update(date: result_date)
       @todo_item.update(status: result_status)
     end
-  binding.pry
+ binding.pry
   end
 end

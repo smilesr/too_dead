@@ -9,16 +9,16 @@ module TooDead
    #    @todolist = todolist
    #  end
 
-    def add_list(list_name)
-      Todolist.find_or_create_by(category: list_name)
-    end
+    # def add_list(list_name)
+    #   Todolist.find_or_create_by(category: list_name)
+    # end
 
-    def delete_list(list_name)
-      TodoList.destroy(category: list_name)
-    end
+    # def delete_list(list_name)
+    #   TodoList.destroy(category: list_name)
+    # end
 
-    def edit_list(list_name)
-      TodoList.update(category: list_name)
-    end
+    # def edit_list(list_name)
+    #   TodoList.update(category: list_name)
+    # end
   end
 end
