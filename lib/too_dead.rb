@@ -16,17 +16,18 @@ module TooDead
       # @first_name = first_name
       # @todo_item = todo_item
       # @todo_list = todo_list
-      @carry_the_category_name = carry_the_category_name
+      @category_name = category_name
       @user = user
     # include Vedeu
     end
     
     def execute_menu
- 
       ask_for_username
       puts ""
       ask_to_add_or_change_account
+      puts""
       add_todolist
+      puts ""
       add_todoitem
     end
 
@@ -74,12 +75,27 @@ module TooDead
     def add_todolist
       puts "What is the name of the to-do list that you would like to create, edit or delete:"
       result = gets.chomp
+      @category_name = result.to_s
       @todolist = TodoList.find_or_create_by(category: result)
-      @carry_the_category_name = result
+      puts "Do you want to (1) add to-do items to the #{result} list or (2) delete this list:"
+      result = gets.chomp
+      until result =~ /^[12]$/
+        puts "You must enter (1) if you want to add items to this list or (2) if you want to delete this list"
+        result = gets.chomp
+      end
+      if result.to_i == 2
+        delete_todolist
+      end
+    end
+
+    def delete_todolist
+      @todolist.destroy
+      puts "The #{@category_name} list has been deleted"
+      exit
     end
 
     def add_todoitem
-      puts "What task do you want to add to the #{@carry_the_category_name} category:"
+      puts "What task do you want to add to the #{@category_name} list:"
       result = gets.chomp
       @todo_item = TodoItem.find_or_create_by(items: result)
       puts "What is the due date for this task:"
