@@ -17,6 +17,7 @@ module TooDead
       # @todo_item = todo_item
       # @todo_list = todo_list
       @category_name = category_name
+      @task_name = task_name
       @user = user
     # include Vedeu
     end
@@ -85,7 +86,7 @@ module TooDead
       end
       if result.to_i == 2
         delete_todolist
-      end
+      end 
     end
 
     def delete_todolist
@@ -98,11 +99,26 @@ module TooDead
       puts "What task do you want to add to the #{@category_name} list:"
       result = gets.chomp
       @todo_item = TodoItem.find_or_create_by(items: result)
-      puts "What is the due date for this task:"
+      enter_due_date
+      @task_name = result
+    end
+
+    def enter_due_date
+      puts "What is the due date for this task (enter in the following format yyyy:mm:dd):"
       result_date = gets.chomp
-      result_status = 'false'
+#      result_status = 'false'
       @todo_item.update(date: result_date)
-      @todo_item.update(status: result_status)
+      completion?
+    end
+
+    def completion?
+      puts "Is the #{@task_name} task completed yet? 'yes' or 'no'"
+      answer = gets.chomp
+      until answer == "yes"  || "no"
+          puts "Please answer either 'yes' or 'no':"
+          answer = gets.chomp
+      end
+      @todo_item.update(status: answer)
     end
  binding.pry
   end
