@@ -15,7 +15,7 @@ module TooDead
     def iniitalize
       # @first_name = first_name
       # @todo_item = todo_item
-      # @todo_list = todo_list
+      @todo_list = todo_list
       @category_name = category_name
       @task_name = task_name
       @user = user
@@ -77,7 +77,8 @@ module TooDead
       puts "What is the name of the to-do list that you would like to create, edit or delete:"
       result = gets.chomp
       @category_name = result.to_s
-      @todolist = TodoList.find_or_create_by(category: result)
+      #binding.pry
+      @todolist = @first_name.todo_lists.find_or_create_by(category: result)
       puts "Do you want to (1) add to-do items to the #{result} list or (2) delete this list:"
       result = gets.chomp
       until result =~ /^[12]$/
@@ -98,7 +99,7 @@ module TooDead
     def add_todoitem
       puts "What task do you want to add to the #{@category_name} list:"
       result = gets.chomp
-      @todo_item = TodoItem.find_or_create_by(items: result)
+      @todo_item = @todolist.todo_items.find_or_create_by(items: result)
       enter_due_date
       @task_name = result
     end

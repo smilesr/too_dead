@@ -1,6 +1,6 @@
 module TooDead
   class TodoItem < ActiveRecord::Base
-    belongs_to :todolists#, :dependent => :delete
+    belongs_to :todo_list#, :dependent => :delete
 #validates_presence_of :todolists
     # attr_accessor :todoitem, :date_due, :completed
     # def intialize

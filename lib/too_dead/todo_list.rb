@@ -1,8 +1,8 @@
 module TooDead
   class TodoList < ActiveRecord::Base
-    has_many :todoitems#, :dependent => :destroy
+    has_many :todo_items#, :dependent => :destroy
    # validate_presence_of :todoitems
-    belongs_to :users#, :dependent => :delete_list
+    belongs_to :user#, :dependent => :delete_list
    # validate_presence_of :users
    # attr_accessor :todolist
    #  def initialize

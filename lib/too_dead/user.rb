@@ -1,7 +1,7 @@
 module TooDead
   #attr_accessor :user
   class User < ActiveRecord::Base
-    has_many :todolists#, :dependent => :destroy
+    has_many :todo_lists#, :dependent => :destroy
     #validate_presence_of:todolists
     # def initialize(x)
   #   @user = user
